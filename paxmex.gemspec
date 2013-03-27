@@ -10,10 +10,10 @@ Gem::Specification.new do |s|
   s.authors     = ["Daryl Yeo", "Anthony Zacharakis"]
   s.email       = ["daryl@lumoslabs.com"]
   s.homepage    = "https://github.com/lumoslabs/paxmex"
-  s.summary     = "This gem parses your Amex data files into human readable data.."
-  s.description = "TODO: Description."
+  s.summary     = "This gem parses your Amex data files into human readable data."
+  s.description = "This gem parses your Amex data files into human readable data."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 3.2.12"
 
