@@ -1,9 +1,9 @@
 module Paxmex
   def self.parse_eptrn(file)
-    Paxmex::EptrnFile.parse(file)
+    Paxmex::EptrnParser.parse(file)
   end
 
   def self.parse_epraw(file)
-    Paxmex::EprawFile.parse(file)
+    Paxmex::EprawParser.parse(file)
   end
 end
