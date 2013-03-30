@@ -1,7 +1,5 @@
-class Paxmex::EprawParser
-  attr_accessor :path
-
-  def initialize(file_path)
-    @path = file_path
+class Paxmex::EprawParser < Paxmex::Parser
+  def self.schema_hash
+    @schema_hash ||= YAML::load(File.open('config/eptraw.yml'))
   end
 end
