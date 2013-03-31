@@ -7,6 +7,10 @@ class Paxmex::Schema
     @sections ||= @schema_hash.map { |k, v| Section.new(k, v) }
   end
 
+  def to_h
+    @schema_hash
+  end
+
   class Section
     BLOCK_LENGTH = 450
 
@@ -50,7 +54,7 @@ class Paxmex::Schema
     end
 
     def length
-      recurring? ? nil : BLOCK_LENGTH
+      BLOCK_LENGTH
     end
 
     private

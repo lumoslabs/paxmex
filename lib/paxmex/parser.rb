@@ -1,10 +1,16 @@
 require 'yaml'
-require 'schema'
+require 'paxmex/schema'
 
 class Paxmex::Parser
-  def initialize(path)
+  SCHEMATA = %w(epraw eptrn).reduce({}) { |h, fn| h.merge(fn => YAML::load(File.open("config/#{fn}.yml"))) }
+
+  def initialize(path, opts = {})
     @path = path
-    @schema = Paxmex::Schema.new(self.class.schema_hash)
+    @schema_key = opts[:schema]
+  end
+
+  def schema
+    @schema ||= Paxmex::Schema.new(SCHEMATA[@schema_key])
   end
 
   def raw
@@ -14,16 +20,19 @@ class Paxmex::Parser
   def parse
     return @parsed if @parsed
 
-    content = raw.dup
+    content = raw.split("\n")
 
+    # Parse the trailing section first so that we don't need
+    # to consider it when parsing recurring sections
     trailer_section = schema.sections.detect(&:trailer?)
-    trailer_content = content.slice!(content.length - trailer_section.length..content.length)
+    trailer_content = [content.slice!(-1)]
     @parsed = parse_section(content: trailer_content, section: trailer_section)
 
-    (schema.sections - [trailer_section]).each do |section|
-      section_content = section.recurring? ? content : content.slice!(0..section.length)
-      parsed_section = parse_section(content: section_content, section: section)
-      @parsed.merge!(parsed_section)
+    schema.sections.reject(&:trailer?).each do |section|
+      @parsed.merge!(
+        parse_section(
+          content: section.recurring? ? content : [content.slice!(0)],
+          section: section))
     end
 
     @parsed
@@ -31,23 +40,35 @@ class Paxmex::Parser
 
   private
 
-  attr_reader :schema
-
   def parse_section(opts = {})
     raise 'Content must be provided' unless content = opts[:content]
     raise 'Section must be provided' unless section = opts[:section]
 
-    if section.abstract?
-      start, final = section.type_field
-      section_type = content[start..final]
-      section = section.section_for_type(section_type)
+    result = {}
+    abstract_section = section if section.abstract?
+
+    content.each do |section_content|
+      if abstract_section
+        start, final = abstract_section.type_field
+        section_type = section_content[start..final]
+        section = abstract_section.section_for_type(section_type)
+      end
+
+      result[section.key] ||= [] if section.recurring?
+
+      p = {}
+      section.fields.each do |field_name, positions|
+        start, final = positions
+        p[field_name] = section_content[start..final]
+      end
+
+      if section.recurring?
+        result[section.key] << p
+      else
+        result[section.key] = p
+      end
     end
 
-    result = {section.key => {}}
-    section.fields.each do |field_name, positions|
-      start, final = positions
-      result[section.key][field_name] = content[start..final]
-    end
     result
   end
 end
