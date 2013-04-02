@@ -13,7 +13,7 @@ This gem parses your Amex data files into human readable data.
 ## Available Methods
 
 * parse_eptrn(file_path)
-* parse_eptrn(file_path)
+* parse_epraw(file_path)
 
 ## Example
 
