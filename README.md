@@ -47,7 +47,7 @@ Paxmex.parse_eptrn('/path/to/amex/eptrn/raw/file')
 Paxmex.parse_epraw('/path/to/amex/epraw/raw/file')
 ```
 
-Output and key-value pairs vary depending on whether you choose to parse an EPTRN or EPRAW file.
+The input files for either methods is a data report file provided by American Express. These files are in either EPRAW or EPTRN format so use the relevant method to parse them. We have provided dummy EPRAW and EPTRN files in `spec/support`. Output and key-value pairs vary depending on whether you choose to parse an EPTRN or EPRAW file.
 
 ## Contributing
 
