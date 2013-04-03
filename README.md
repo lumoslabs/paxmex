@@ -34,8 +34,8 @@ Both methods return a readable hash in the following format:
     "DF_TRL_FILE_ID" => "000000",
     "DF_TRL_FILE_NAME" => "LUMOS LABS INC      ",
     "DF_TRL_RECIPIENT_KEY" => "00000000002754170029          0000000000",
-    "DF_TRL_RECORD_COUNT"=>"0000004"
-    },
+    "DF_TRL_RECORD_COUNT" => "0000004"
+  },
   "DATA_FILE_HEADER_RECORD" => {
     "DF_HDR_RECORD_TYPE" => "DFHDR",
     "DF_HDR_DATE" => "03082013",
