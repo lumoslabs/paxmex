@@ -15,14 +15,6 @@ This gem parses your Amex data files into human readable data.
 * parse_eptrn(file_path)
 * parse_epraw(file_path)
 
-## Example
-
-```ruby
-require 'paxmex'
-Paxmex.parse_eptrn('/path/to/amex/eptrn/raw/file')
-Paxmex.parse_epraw('/path/to/amex/epraw/raw/file')
-```
-
 Both methods return a readable hash in the following format:
 
 ```ruby
@@ -45,6 +37,14 @@ Both methods return a readable hash in the following format:
   },
   ...
 }
+```
+
+## Example
+
+```ruby
+require 'paxmex'
+Paxmex.parse_eptrn('/path/to/amex/eptrn/raw/file')
+Paxmex.parse_epraw('/path/to/amex/epraw/raw/file')
 ```
 
 Output and key-value pairs vary depending on whether you choose to parse an EPTRN or EPRAW file.
