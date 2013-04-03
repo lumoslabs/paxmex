@@ -1,9 +1,11 @@
 module Paxmex
+  require 'paxmex/parser'
+
   def self.parse_eptrn(file)
-    Paxmex::EptrnFile.parse(file)
+    Parser.new(file, schema: 'eptrn').parse
   end
 
   def self.parse_epraw(file)
-    Paxmex::EprawFile.parse(file)
+    Parser.new(file, schema: 'epraw').parse
   end
 end
