@@ -56,20 +56,22 @@ describe Paxmex::Parser do
           "DF_HDR_FILE_ID" => "000000",
           "DF_HDR_FILE_NAME" => "LUMOS LABS INC      "
         },
-        "SUMMARY_RECORD" => {
-          "AMEX_PAYEE_NUMBER" => "3491124567",
-          "AMEX_SORT_FIELD_1" => "0000000000",
-          "AMEX_SORT_FIELD_2" => "0000000000",
-          "PAYMENT_YEAR" => "2013",
-          "PAYMENT_NUMBER" => "DUMT1234",
-          "RECORD_TYPE" => "1",
-          "DETAIL_RECORD_TYPE" => "00",
-          "PAYMENT_DATE" => "2013068",
-          "PAYMENT_AMOUNT" => "0000500355D",
-          "DEBIT_BALANCE_AMOUNT" => "00000000{",
-          "ABA_BANK_NUMBER" => "121140399",
-          "SE_DDA_NUMBER" => "0000004000       "
-        },
+        "SUMMARY_RECORD" => [
+          {
+            "AMEX_PAYEE_NUMBER" => "3491124567",
+            "AMEX_SORT_FIELD_1" => "0000000000",
+            "AMEX_SORT_FIELD_2" => "0000000000",
+            "PAYMENT_YEAR" => "2013",
+            "PAYMENT_NUMBER" => "DUMT1234",
+            "RECORD_TYPE" => "1",
+            "DETAIL_RECORD_TYPE" => "00",
+            "PAYMENT_DATE" => "2013068",
+            "PAYMENT_AMOUNT" => "0000500355D",
+            "DEBIT_BALANCE_AMOUNT" => "00000000{",
+            "ABA_BANK_NUMBER" => "121140399",
+            "SE_DDA_NUMBER" => "0000004000       "
+          }
+        ],
         "SUMMARY_OF_CHARGE_DETAIL_RECORD" => [
           {
             "AMEX_PAYEE_NUMBER" => "3491124567",
@@ -145,20 +147,22 @@ describe Paxmex::Parser do
           "DF_HDR_FILE_ID" => "000000",
           "DF_HDR_FILE_NAME" => "LUMOS LABS INC"
         },
-        "SUMMARY_RECORD" => {
-          "AMEX_PAYEE_NUMBER" => "1234567890",
-          "AMEX_SORT_FIELD_1" => "0000000000",
-          "AMEX_SORT_FIELD_2" => "0000000000",
-          "PAYMENT_YEAR" => "2013",
-          "PAYMENT_NUMBER" => "066M1416",
-          "RECORD_TYPE"=>"1",
-          "DETAIL_RECORD_TYPE" => "00",
-          "PAYMENT_DATE" => "2013068",
-          "PAYMENT_AMOUNT" => "0000226124C",
-          "DEBIT_BALANCE_AMOUNT" => "00000000{",
-          "ABA_BANK_NUMBER" => "123140399",
-          "SE_DDA_NUMBER" => "0000123000"
-        },
+        "SUMMARY_RECORD" => [
+          {
+            "AMEX_PAYEE_NUMBER" => "1234567890",
+            "AMEX_SORT_FIELD_1" => "0000000000",
+            "AMEX_SORT_FIELD_2" => "0000000000",
+            "PAYMENT_YEAR" => "2013",
+            "PAYMENT_NUMBER" => "066M1416",
+            "RECORD_TYPE"=>"1",
+            "DETAIL_RECORD_TYPE" => "00",
+            "PAYMENT_DATE" => "2013068",
+            "PAYMENT_AMOUNT" => "0000226124C",
+            "DEBIT_BALANCE_AMOUNT" => "00000000{",
+            "ABA_BANK_NUMBER" => "123140399",
+            "SE_DDA_NUMBER" => "0000123000"
+          }
+        ],
         "SUMMARY_OF_CHARGE_DETAIL_RECORD" => [
           {
             "AMEX_PAYEE_NUMBER" => "2041230025",
