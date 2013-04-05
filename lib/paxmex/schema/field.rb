@@ -32,7 +32,8 @@ class Paxmex::Schema::Field
       'P' => 7, 'Q' => 8, 'R' => 9,
       '{' => 0, '}' => 0)
 
-    BigDecimal.new(value.to_i * (is_credit ? -1 : 1) / 100.0, 7)
+    parsed_value = value.to_i * (is_credit ? -1 : 1) / 100.0
+    BigDecimal.new(parsed_value.to_s, 7)
   end
 
   def parse_julian_date(date_string)
