@@ -1,4 +1,6 @@
 class Paxmex::Schema
+  require 'paxmex/schema/section'
+
   def initialize(schema_hash)
     @schema_hash = schema_hash
   end
@@ -9,58 +11,5 @@ class Paxmex::Schema
 
   def to_h
     @schema_hash
-  end
-
-  class Section
-    BLOCK_LENGTH = 450
-
-    attr_reader :key, :data
-
-    def initialize(key, data)
-      @key = key
-      @data = data
-    end
-
-    def recurring?
-      !!data['RECURRING']
-    end
-
-    def abstract?
-      !!data['ABSTRACT']
-    end
-
-    def trailer?
-      !!data['TRAILER']
-    end
-
-    def fields
-      data['FIELDS']
-    end
-
-    def types
-      data['TYPES']
-    end
-
-    def type_field
-      data['TYPE_FIELD']
-    end
-
-    def type_mapping
-      data['TYPE_MAPPING']
-    end
-
-    def section_for_type(type)
-      sections_for_types.detect { |t| t.key == type_mapping[type] }
-    end
-
-    def length
-      BLOCK_LENGTH
-    end
-
-    private
-
-    def sections_for_types
-      @sections_for_types ||= types.map { |k, v| Section.new(k, v) }
-    end
   end
 end

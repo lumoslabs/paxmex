@@ -57,9 +57,8 @@ class Paxmex::Parser
       result[section.key] ||= [] if section.recurring?
 
       p = {}
-      section.fields.each do |field_name, positions|
-        start, final = positions
-        p[field_name] = section_content[start..final]
+      section.fields.each do |field|
+        p[field.name] = section_content[field.start..field.final]
       end
 
       if section.recurring?
