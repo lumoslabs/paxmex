@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lumoslabs/paxmex.png)](https://travis-ci.org/lumoslabs/paxmex)
+
 # Paxmex
 
 This gem parses your Amex data files into human readable data.
