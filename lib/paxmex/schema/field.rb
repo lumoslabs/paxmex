@@ -2,7 +2,7 @@ require 'bigdecimal'
 require 'paxmex/schema'
 
 class Paxmex::Schema::Field
-  attr_reader :name, :start, :final
+  attr_reader :name, :start, :final, :type
 
   def initialize(opts = {})
     @name  = opts[:name]

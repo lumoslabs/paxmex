@@ -27,7 +27,8 @@ class Paxmex::Schema::Section
       Paxmex::Schema::Field.new(
         name: field['NAME'],
         start: field['RANGE'].first,
-        final: field['RANGE'].last)
+        final: field['RANGE'].last,
+        type: field['TYPE'])
     end
   end
 

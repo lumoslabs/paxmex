@@ -17,7 +17,7 @@ class Paxmex::Parser
     @raw ||= File.read(@path).chomp
   end
 
-  def parse
+  def parse(opts = {})
     return @parsed if @parsed
 
     content = raw.split("\n")
@@ -26,13 +26,14 @@ class Paxmex::Parser
     # to consider it when parsing recurring sections
     trailer_section = schema.sections.detect(&:trailer?)
     trailer_content = [content.slice!(-1)]
-    @parsed = parse_section(content: trailer_content, section: trailer_section)
+    @parsed = parse_section(content: trailer_content, section: trailer_section, raw: opts[:raw_values])
 
     schema.sections.reject(&:trailer?).each do |section|
       @parsed.merge!(
         parse_section(
           content: section.recurring? ? content : [content.slice!(0)],
-          section: section))
+          section: section,
+          raw: opts[:raw_values]))
     end
 
     @parsed
@@ -58,7 +59,8 @@ class Paxmex::Parser
 
       p = {}
       section.fields.each do |field|
-        p[field.name] = section_content[field.start..field.final]
+        raw_value = section_content[field.start..field.final]
+        p[field.name] = opts[:raw] ? raw_value : field.parse(raw_value)
       end
 
       if section.recurring?
