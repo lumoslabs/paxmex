@@ -2,15 +2,15 @@ require 'yaml'
 require 'paxmex/schema'
 
 class Paxmex::Parser
-  SCHEMATA = %w(epraw eptrn).reduce({}) { |h, fn| h.merge(fn => YAML::load(File.open("config/#{fn}.yml"))) }
+  SCHEMATA = %w(epraw eptrn).reduce({}) do |h, fn|
+    h.merge(fn => Paxmex::Schema.new(YAML::load(File.open("config/#{fn}.yml"))))
+  end
+
+  attr_reader :schema
 
   def initialize(path, opts = {})
     @path = path
-    @schema_key = opts[:schema]
-  end
-
-  def schema
-    @schema ||= Paxmex::Schema.new(SCHEMATA[@schema_key])
+    @schema = SCHEMATA[opts[:schema]]
   end
 
   def raw

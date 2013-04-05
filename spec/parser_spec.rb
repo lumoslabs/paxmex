@@ -25,7 +25,7 @@ describe Paxmex::Parser do
     end
 
     it 'returns the schema for the specified key of the eptrn file' do
-      parser_eptrn.schema.to_h.should == Paxmex::Parser::SCHEMATA[schema_key_eptrn]
+      parser_eptrn.schema.to_h.should == Paxmex::Parser::SCHEMATA[schema_key_eptrn].to_h
     end
 
     it 'returns a schema object for the epraw file' do
@@ -33,7 +33,7 @@ describe Paxmex::Parser do
     end
 
     it 'returns the schema for the specified key of the epraw file' do
-      parser_epraw.schema.to_h.should == Paxmex::Parser::SCHEMATA[schema_key_epraw]
+      parser_epraw.schema.to_h.should == Paxmex::Parser::SCHEMATA[schema_key_epraw].to_h
     end
   end
 
