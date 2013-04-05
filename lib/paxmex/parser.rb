@@ -4,7 +4,7 @@ require 'paxmex/schema'
 class Paxmex::Parser
   SCHEMATA = %w(epraw eptrn).reduce({}) do |h, fn|
     file = File.expand_path("../../config/#{fn}.yml", File.dirname(__FILE__))
-    h.merge(fn => Paxmex::Schema.new(YAML::load(File.open(file))))
+    h.merge(fn => Paxmex::Schema.new(YAML.load(File.open(file))))
   end
 
   attr_reader :schema
