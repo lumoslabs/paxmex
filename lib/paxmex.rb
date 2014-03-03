@@ -5,7 +5,7 @@ module Paxmex
     Parser.new(file, schema: 'eptrn').parse(opts)
   end
 
-  def self.parse_epraw(file)
+  def self.parse_epraw(file, opts = {})
     Parser.new(file, schema: 'epraw').parse(opts)
   end
 end
