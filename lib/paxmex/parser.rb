@@ -2,16 +2,18 @@ require 'yaml'
 require 'paxmex/schema'
 
 class Paxmex::Parser
-  SCHEMATA = %w(epraw eptrn).reduce({}) do |h, fn|
-    file = File.expand_path("../../config/#{fn}.yml", File.dirname(__FILE__))
-    h.merge(fn => Paxmex::Schema.new(YAML.load(File.open(file))))
-  end
+  attr_reader :schema, :path
 
-  attr_reader :schema
+  def initialize(data_file, schema)
+    @path = data_file
 
-  def initialize(path, opts = {})
-    @path = path
-    @schema = SCHEMATA[opts[:schema]]
+    if File.file?(schema)
+      schema_file = schema
+    else
+      schema_file = File.expand_path("../../config/#{schema}.yml", File.dirname(__FILE__))
+    end
+
+    @schema = Paxmex::Schema.new(YAML.load_file(schema_file))
   end
 
   def raw
@@ -27,25 +29,17 @@ class Paxmex::Parser
     # to consider it when parsing recurring sections
     trailer_section = schema.sections.detect(&:trailer?)
     trailer_content = [content.slice!(-1)]
-    @parsed = parse_section(content: trailer_content, section: trailer_section, raw: opts[:raw_values])
+    @parsed = parse_section(trailer_section, trailer_content, raw: opts[:raw_values])
 
-    schema.sections.reject(&:trailer?).each do |section|
-      @parsed.merge!(
-        parse_section(
-          content: section.recurring? ? content : [content.slice!(0)],
-          section: section,
-          raw: opts[:raw_values]))
+    schema.sections.reject(&:trailer?).each.with_object(@parsed) do |s, o|
+      section_content = s.recurring? ? content : [content.slice!(0)]
+      o.update(parse_section(s, section_content, raw: opts[:raw_values]))
     end
-
-    @parsed
   end
 
   private
 
-  def parse_section(opts = {})
-    raise 'Content must be provided' unless content = opts[:content]
-    raise 'Section must be provided' unless section = opts[:section]
-
+  def parse_section(section, content, opts = {})
     result = {}
     abstract_section = section if section.abstract?
 

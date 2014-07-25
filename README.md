@@ -16,6 +16,7 @@ This gem parses your Amex data files into human readable data.
 
 * parse_eptrn(file_path)
 * parse_epraw(file_path)
+* parse_epa(file_path)
 
 Both methods return a readable hash in the following format:
 

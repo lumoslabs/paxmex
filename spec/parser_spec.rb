@@ -3,11 +3,25 @@ require 'paxmex/parser'
 describe Paxmex::Parser do
   let(:eptrn_file) { File.join(File.dirname(__FILE__), 'support/dummy_eptrn_raw') }
   let(:schema_key_eptrn) { 'eptrn' }
-  let(:parser_eptrn) { Paxmex::Parser.new(eptrn_file, schema: schema_key_eptrn) }
+  let(:parser_eptrn) { Paxmex::Parser.new(eptrn_file, schema_key_eptrn) }
 
   let(:epraw_file) { File.join(File.dirname(__FILE__), 'support/dummy_epraw_raw') }
   let(:schema_key_epraw) { 'epraw' }
-  let(:parser_epraw) { Paxmex::Parser.new(epraw_file, schema: schema_key_epraw) }
+  let(:parser_epraw) { Paxmex::Parser.new(epraw_file, schema_key_epraw) }
+
+  let(:epa_file) { File.join(File.dirname(__FILE__), 'support/dummy_epa_raw') }
+  let(:schema_key_epa) { 'epa' }
+  let(:schema_file_epa) { File.expand_path('../config/epa.yml', File.dirname(__FILE__)) }
+  let(:parser_epa) { Paxmex::Parser.new(epa_file, schema_key_epa) }
+
+  describe '.new' do
+    it 'accepts a schema name as well as a schema file' do
+      schema_1 = Paxmex::Parser.new(eptrn_file, schema_key_epa).schema
+      schema_2 = Paxmex::Parser.new(eptrn_file, schema_file_epa).schema
+
+      schema_1.to_h.should == schema_2.to_h
+    end
+  end
 
   describe '#raw' do
     it 'returns the raw text for the eptrn file' do
@@ -17,6 +31,10 @@ describe Paxmex::Parser do
     it 'returns the raw text for the epraw file' do
       parser_epraw.raw.should == File.read(epraw_file).chomp
     end
+
+    it 'returns the raw text for the epa file' do
+      parser_epa.raw.should == File.read(epa_file).chomp
+    end
   end
 
   describe '#schema' do
@@ -24,16 +42,12 @@ describe Paxmex::Parser do
       parser_eptrn.schema.should be_instance_of(Paxmex::Schema)
     end
 
-    it 'returns the schema for the specified key of the eptrn file' do
-      parser_eptrn.schema.to_h.should == Paxmex::Parser::SCHEMATA[schema_key_eptrn].to_h
-    end
-
     it 'returns a schema object for the epraw file' do
       parser_epraw.schema.should be_instance_of(Paxmex::Schema)
     end
 
-    it 'returns the schema for the specified key of the epraw file' do
-      parser_epraw.schema.to_h.should == Paxmex::Parser::SCHEMATA[schema_key_epraw].to_h
+    it 'returns a schema object for the epa file' do
+      parser_epa.schema.should be_instance_of(Paxmex::Schema)
     end
   end
 
@@ -194,6 +208,84 @@ describe Paxmex::Parser do
       }
     end
 
+    it 'returns a hash with parsed values for the epa file' do
+      parser_epa.parse.should == {
+        "TRAILER_RECORD" => {
+          "TRAILER_RECORD_TYPE" => "DFTLR",
+          "TRAILER_DATE" => Date.new(2014, 7, 22),
+          "TRAILER_TIME" => "0536",
+          "TRAILER_ID" => "PANEUR",
+          "TRAILER_NAME" => "PAN-EUROPE EPA FILE",
+          "TRAILER_RECIPIENT_KEY" => "9443010723",
+          "TRAILER_RECORD_COUNT" => 65
+        },
+        "HEADER_RECORD" => {
+          "HEADER_RECORD_TYPE" => "DFHDR",
+          "HEADER_TIME" => Time.new(2014, 7, 22, 5, 36),
+          "HEADER_ID" => 0,
+          "HEADER_NAME" => "PAN-EUROPE EPA FILE"
+        },
+        "PAYMENT_SUMMARY" => {
+          "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+          "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+          "SETTLEMENT_DATE" => Date.new(2014, 7, 24),
+          "SUBMISSION_SE_ACCOUNT_NUMBER" => "0000000000",
+          "SETTLEMENT_AMOUNT" => 253.59,
+          "SE_BANK_SORT_CODE" => "222333",
+          "SE_BANK_ACCOUNT_NUMBER" => "01231000",
+          "SETTLEMENT_GROSS_AMOUNT" => 261.04,
+          "TAX_AMOUNT" => 0.0,
+          "TAX_RATE" => 0.0,
+          "SERVICE_FEE_AMOUNT" => -7.45,
+          "SERVICE_FEE_RATE" => 0.0,
+          "SETTLEMENT_ADJUSTMENT_AMOUNT" => 0.0,
+          "PAY_PLAN_SHORT_NAME" => "CUT DAILY PAY 4 BANK DAYS",
+          "PAYEE_NAME" => "ACME1 PAYMENTS LIMITED",
+          "SETTLEMENT_ACCOUNT_NAME" => "PRIMARY",
+          "SETTLEMENT_CURRENCY_CODE" => "GBP",
+          "PREVIOUS_DEBIT_BALANCE" => 0.0
+        },
+        "SUMMARY_OF_CHARGE" => [
+          {
+            "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+            "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+            "SETTLEMENT_DATE" => Date.new(2014, 7, 24),
+            "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+            "SOC_DATE" => Date.new(2014, 7, 18),
+            "SUBMISSION_CALCULATED_GROSS_AMOUNT" => 135.0,
+            "SUBMISSION_DECLARED_GROSS_AMOUNT" => 135.0,
+            "DISCOUNT_AMOUNT" => -3.85,
+            "SETTLEMENT_NET_AMOUNT" => 131.15,
+            "SERVICE_FEE_RATE" => 2.85,
+            "SETTLEMENT_GROSS_AMOUNT" => 135.0,
+            "ROC_CALCULATED_COUNT" => 0.01,
+            "TERMINAL_ID" => "",
+            "SETTLEMENT_TAX_AMOUNT" => 0.0,
+            "SETTLEMENT_TAX_RATE" => 0.0,
+            "SUBMISSION_CURRENCY_CODE" => "GBP",
+            "SUBMISSION_NUMBER" => 0,
+            "SUBMISSION_SE_BRANCH_NUMBER" => "",
+            "SUBMISSION_METHOD_CODE" => "E",
+            "EXCHANGE_RATE" => 1000.0
+          }
+        ],
+        "RECORD_OF_CHARGE" => [
+          {
+            "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+            "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+            "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+            "CHARGE_AMOUNT" => 135.0,
+            "CHARGE_DATE" => Date.new(2014, 7, 17),
+            "ROC_REFERENCE_NUMBER" => "",
+            "3-DIGIT_CHARGE_AUTHORISATION_CODE" => "128",
+            "CARD_MEMBER_ACCOUNT_NUMBER" => "377064XXXXX5847",
+            "AIRLINE_TICKET_NUMBER" => "",
+            "6-DIGIT_CHARGE_AUTHORISATION_CODE" => "123456"
+          }
+        ]
+      }
+    end
+
     context 'with raw set to true' do
       it 'returns a hash with raw values for the eptrn file' do
         parser_eptrn.parse(raw_values: true).should == {
@@ -346,6 +438,84 @@ describe Paxmex::Parser do
               "AMEX_ROC_COUNT" => "0040E",
               "TRACKING_ID" => "065028576",
               "CPC_INDICATOR" => " "
+            }
+          ]
+        }
+      end
+
+      it 'returns a hash with raw values for the epa file' do
+        parser_epa.parse(raw_values: true).should == {
+          "TRAILER_RECORD" => {
+            "TRAILER_RECORD_TYPE" => "DFTLR ",
+            "TRAILER_DATE" => "20140722",
+            "TRAILER_TIME" => "0536",
+            "TRAILER_ID" => "PANEUR",
+            "TRAILER_NAME" => "PAN-EUROPE EPA FILE ",
+            "TRAILER_RECIPIENT_KEY" => "9443010723                              ",
+            "TRAILER_RECORD_COUNT" => "0000065"
+          },
+          "HEADER_RECORD" => {
+            "HEADER_RECORD_TYPE" => "DFHDR ",
+            "HEADER_TIME" => "201407220536",
+            "HEADER_ID" => "PANEUR",
+            "HEADER_NAME" => "PAN-EUROPE EPA FILE "
+          },
+          "PAYMENT_SUMMARY" => {
+            "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+            "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+            "SETTLEMENT_DATE" => "20140724",
+            "SUBMISSION_SE_ACCOUNT_NUMBER" => "0000000000",
+            "SETTLEMENT_AMOUNT" => "00000000002535I",
+            "SE_BANK_SORT_CODE" => "222333         ",
+            "SE_BANK_ACCOUNT_NUMBER" => "01231000            ",
+            "SETTLEMENT_GROSS_AMOUNT" => "00000000002610D",
+            "TAX_AMOUNT" => "00000000000000{",
+            "TAX_RATE" => "0000000",
+            "SERVICE_FEE_AMOUNT" => "00000000000074N",
+            "SERVICE_FEE_RATE" => "0000000",
+            "SETTLEMENT_ADJUSTMENT_AMOUNT" => "00000000000000{",
+            "PAY_PLAN_SHORT_NAME" => "CUT DAILY PAY 4 BANK DAYS     ",
+            "PAYEE_NAME" => "ACME1 PAYMENTS LIMITED                ",
+            "SETTLEMENT_ACCOUNT_NAME" => "PRIMARY             ",
+            "SETTLEMENT_CURRENCY_CODE" => "GBP",
+            "PREVIOUS_DEBIT_BALANCE" => "00000000000000{"
+          },
+          "SUMMARY_OF_CHARGE" => [
+            {
+              "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+              "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+              "SETTLEMENT_DATE" => "20140724",
+              "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+              "SOC_DATE" => "20140718",
+              "SUBMISSION_CALCULATED_GROSS_AMOUNT" => "00000000001350{",
+              "SUBMISSION_DECLARED_GROSS_AMOUNT" => "00000000001350{",
+              "DISCOUNT_AMOUNT" => "00000000000038N",
+              "SETTLEMENT_NET_AMOUNT" => "00000000001311E",
+              "SERVICE_FEE_RATE" => "000285",
+              "SETTLEMENT_GROSS_AMOUNT" => "00000000001350{",
+              "ROC_CALCULATED_COUNT" => "0000A",
+              "TERMINAL_ID" => "          ",
+              "SETTLEMENT_TAX_AMOUNT" => "00000000000000{",
+              "SETTLEMENT_TAX_RATE" => "0000000",
+              "SUBMISSION_CURRENCY_CODE" => "GBP",
+              "SUBMISSION_NUMBER" => "000000000000000",
+              "SUBMISSION_SE_BRANCH_NUMBER" => "          ",
+              "SUBMISSION_METHOD_CODE" => "E ",
+              "EXCHANGE_RATE" => "00000000010000{"
+            }
+          ],
+          "RECORD_OF_CHARGE" => [
+            {
+              "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+              "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+              "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+              "CHARGE_AMOUNT" => "0000001350{",
+              "CHARGE_DATE" => "20140717",
+              "ROC_REFERENCE_NUMBER" => "               ",
+              "3-DIGIT_CHARGE_AUTHORISATION_CODE" => "128",
+              "CARD_MEMBER_ACCOUNT_NUMBER" => "377064XXXXX5847",
+              "AIRLINE_TICKET_NUMBER" => "              ",
+              "6-DIGIT_CHARGE_AUTHORISATION_CODE" => "123456"
             }
           ]
         }
