@@ -3,9 +3,10 @@ require 'paxmex/schema/field'
 class Paxmex::Schema::Section
   BLOCK_LENGTH = 450
 
-  attr_reader :key, :data
+  attr_reader :key, :data, :parent_key
 
   def initialize(key, data)
+    @parent_key = data.delete('PARENT') { nil }
     @key = key
     @data = data
   end
@@ -22,13 +23,18 @@ class Paxmex::Schema::Section
     !!data['TRAILER']
   end
 
+  def child?
+    !!@parent_key
+  end
+
   def fields
     @fields ||= data['FIELDS'].map do |field|
       Paxmex::Schema::Field.new(
         name: field['NAME'],
         start: field['RANGE'].first,
         final: field['RANGE'].last,
-        type: field['TYPE'])
+        type: field['TYPE']
+      )
     end
   end
 
@@ -51,8 +57,6 @@ class Paxmex::Schema::Section
   def length
     BLOCK_LENGTH
   end
-
-  private
 
   def sections_for_types
     @sections_for_types ||= types.map { |k, v| self.class.new(k, v) }

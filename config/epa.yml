@@ -23,6 +23,7 @@ DETAIL_RECORD:
     '230': ADJUSTMENT_RECORD
   TYPES:
     PAYMENT_SUMMARY:
+      RECURRING: true
       FIELDS:
         - NAME: SETTLEMENT_SE_ACCOUNT_NUMBER
           RANGE: [0, 9]
@@ -80,6 +81,7 @@ DETAIL_RECORD:
           TYPE: decimal
     SUMMARY_OF_CHARGE:
       RECURRING: true
+      PARENT: PAYMENT_SUMMARY
       FIELDS:
         - NAME: SETTLEMENT_SE_ACCOUNT_NUMBER
           RANGE: [0, 9]
@@ -143,6 +145,7 @@ DETAIL_RECORD:
           TYPE: decimal
     RECORD_OF_CHARGE:
       RECURRING: true
+      PARENT: SUMMARY_OF_CHARGE
       FIELDS:
         - NAME: SETTLEMENT_SE_ACCOUNT_NUMBER
           RANGE: [0, 9]
@@ -162,7 +165,7 @@ DETAIL_RECORD:
         - NAME: ROC_REFERENCE_NUMBER
           RANGE: [59, 70]
           TYPE: string
-        - NAME: ROC_REFERENCE_NUMBER
+        - NAME: ROC_REFERENCE_NUMBER_CPC
           RANGE: [71, 85]
           TYPE: string
         - NAME: 3-DIGIT_CHARGE_AUTHORISATION_CODE

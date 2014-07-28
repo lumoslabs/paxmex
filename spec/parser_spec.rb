@@ -225,62 +225,69 @@ describe Paxmex::Parser do
           "HEADER_ID" => 0,
           "HEADER_NAME" => "PAN-EUROPE EPA FILE"
         },
-        "PAYMENT_SUMMARY" => {
-          "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
-          "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
-          "SETTLEMENT_DATE" => Date.new(2014, 7, 24),
-          "SUBMISSION_SE_ACCOUNT_NUMBER" => "0000000000",
-          "SETTLEMENT_AMOUNT" => 253.59,
-          "SE_BANK_SORT_CODE" => "222333",
-          "SE_BANK_ACCOUNT_NUMBER" => "01231000",
-          "SETTLEMENT_GROSS_AMOUNT" => 261.04,
-          "TAX_AMOUNT" => 0.0,
-          "TAX_RATE" => 0.0,
-          "SERVICE_FEE_AMOUNT" => -7.45,
-          "SERVICE_FEE_RATE" => 0.0,
-          "SETTLEMENT_ADJUSTMENT_AMOUNT" => 0.0,
-          "PAY_PLAN_SHORT_NAME" => "CUT DAILY PAY 4 BANK DAYS",
-          "PAYEE_NAME" => "ACME1 PAYMENTS LIMITED",
-          "SETTLEMENT_ACCOUNT_NAME" => "PRIMARY",
-          "SETTLEMENT_CURRENCY_CODE" => "GBP",
-          "PREVIOUS_DEBIT_BALANCE" => 0.0
-        },
-        "SUMMARY_OF_CHARGE" => [
+        "PAYMENT_SUMMARY" => [
           {
             "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
             "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
             "SETTLEMENT_DATE" => Date.new(2014, 7, 24),
-            "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
-            "SOC_DATE" => Date.new(2014, 7, 18),
-            "SUBMISSION_CALCULATED_GROSS_AMOUNT" => 135.0,
-            "SUBMISSION_DECLARED_GROSS_AMOUNT" => 135.0,
-            "DISCOUNT_AMOUNT" => -3.85,
-            "SETTLEMENT_NET_AMOUNT" => 131.15,
-            "SERVICE_FEE_RATE" => 2.85,
-            "SETTLEMENT_GROSS_AMOUNT" => 135.0,
-            "ROC_CALCULATED_COUNT" => 0.01,
-            "TERMINAL_ID" => "",
-            "SETTLEMENT_TAX_AMOUNT" => 0.0,
-            "SETTLEMENT_TAX_RATE" => 0.0,
-            "SUBMISSION_CURRENCY_CODE" => "GBP",
-            "SUBMISSION_NUMBER" => 0,
-            "SUBMISSION_SE_BRANCH_NUMBER" => "",
-            "SUBMISSION_METHOD_CODE" => "E",
-            "EXCHANGE_RATE" => 1000.0
-          }
-        ],
-        "RECORD_OF_CHARGE" => [
-          {
-            "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
-            "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
-            "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
-            "CHARGE_AMOUNT" => 135.0,
-            "CHARGE_DATE" => Date.new(2014, 7, 17),
-            "ROC_REFERENCE_NUMBER" => "",
-            "3-DIGIT_CHARGE_AUTHORISATION_CODE" => "128",
-            "CARD_MEMBER_ACCOUNT_NUMBER" => "377064XXXXX5847",
-            "AIRLINE_TICKET_NUMBER" => "",
-            "6-DIGIT_CHARGE_AUTHORISATION_CODE" => "123456"
+            "SUBMISSION_SE_ACCOUNT_NUMBER" => "0000000000",
+            "SETTLEMENT_AMOUNT" => 253.59,
+            "SE_BANK_SORT_CODE" => "222333",
+            "SE_BANK_ACCOUNT_NUMBER" => "01231000",
+            "SETTLEMENT_GROSS_AMOUNT" => 261.04,
+            "TAX_AMOUNT" => 0.0,
+            "TAX_RATE" => 0.0,
+            "SERVICE_FEE_AMOUNT" => -7.45,
+            "SERVICE_FEE_RATE" => 0.0,
+            "SETTLEMENT_ADJUSTMENT_AMOUNT" => 0.0,
+            "PAY_PLAN_SHORT_NAME" => "CUT DAILY PAY 4 BANK DAYS",
+            "PAYEE_NAME" => "ACME1 PAYMENTS LIMITED",
+            "SETTLEMENT_ACCOUNT_NAME" => "PRIMARY",
+            "SETTLEMENT_CURRENCY_CODE" => "GBP",
+            "PREVIOUS_DEBIT_BALANCE" => 0.0,
+            :children => {
+              "SUMMARY_OF_CHARGE" => [
+                {
+                  "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+                  "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+                  "SETTLEMENT_DATE" => Date.new(2014, 7, 24),
+                  "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+                  "SOC_DATE" => Date.new(2014, 7, 18),
+                  "SUBMISSION_CALCULATED_GROSS_AMOUNT" => 135.0,
+                  "SUBMISSION_DECLARED_GROSS_AMOUNT" => 135.0,
+                  "DISCOUNT_AMOUNT" => -3.85,
+                  "SETTLEMENT_NET_AMOUNT" => 131.15,
+                  "SERVICE_FEE_RATE" => 2.85,
+                  "SETTLEMENT_GROSS_AMOUNT" => 135.0,
+                  "ROC_CALCULATED_COUNT" => 0.01,
+                  "TERMINAL_ID" => "",
+                  "SETTLEMENT_TAX_AMOUNT" => 0.0,
+                  "SETTLEMENT_TAX_RATE" => 0.0,
+                  "SUBMISSION_CURRENCY_CODE" => "GBP",
+                  "SUBMISSION_NUMBER" => 0,
+                  "SUBMISSION_SE_BRANCH_NUMBER" => "",
+                  "SUBMISSION_METHOD_CODE" => "E",
+                  "EXCHANGE_RATE" => 1000.0,
+                  :children => {
+                    "RECORD_OF_CHARGE" => [
+                      {
+                        "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+                        "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+                        "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+                        "CHARGE_AMOUNT" => 135.0,
+                        "CHARGE_DATE" => Date.new(2014, 7, 17),
+                        "ROC_REFERENCE_NUMBER" => "1311123",
+                        "ROC_REFERENCE_NUMBER_CPC" => "",
+                        "3-DIGIT_CHARGE_AUTHORISATION_CODE" => "128",
+                        "CARD_MEMBER_ACCOUNT_NUMBER" => "377064XXXXX5847",
+                        "AIRLINE_TICKET_NUMBER" => "",
+                        "6-DIGIT_CHARGE_AUTHORISATION_CODE" => "123456"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
           }
         ]
       }
@@ -460,62 +467,69 @@ describe Paxmex::Parser do
             "HEADER_ID" => "PANEUR",
             "HEADER_NAME" => "PAN-EUROPE EPA FILE "
           },
-          "PAYMENT_SUMMARY" => {
-            "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
-            "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
-            "SETTLEMENT_DATE" => "20140724",
-            "SUBMISSION_SE_ACCOUNT_NUMBER" => "0000000000",
-            "SETTLEMENT_AMOUNT" => "00000000002535I",
-            "SE_BANK_SORT_CODE" => "222333         ",
-            "SE_BANK_ACCOUNT_NUMBER" => "01231000            ",
-            "SETTLEMENT_GROSS_AMOUNT" => "00000000002610D",
-            "TAX_AMOUNT" => "00000000000000{",
-            "TAX_RATE" => "0000000",
-            "SERVICE_FEE_AMOUNT" => "00000000000074N",
-            "SERVICE_FEE_RATE" => "0000000",
-            "SETTLEMENT_ADJUSTMENT_AMOUNT" => "00000000000000{",
-            "PAY_PLAN_SHORT_NAME" => "CUT DAILY PAY 4 BANK DAYS     ",
-            "PAYEE_NAME" => "ACME1 PAYMENTS LIMITED                ",
-            "SETTLEMENT_ACCOUNT_NAME" => "PRIMARY             ",
-            "SETTLEMENT_CURRENCY_CODE" => "GBP",
-            "PREVIOUS_DEBIT_BALANCE" => "00000000000000{"
-          },
-          "SUMMARY_OF_CHARGE" => [
+          "PAYMENT_SUMMARY" => [
             {
               "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
               "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
               "SETTLEMENT_DATE" => "20140724",
-              "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
-              "SOC_DATE" => "20140718",
-              "SUBMISSION_CALCULATED_GROSS_AMOUNT" => "00000000001350{",
-              "SUBMISSION_DECLARED_GROSS_AMOUNT" => "00000000001350{",
-              "DISCOUNT_AMOUNT" => "00000000000038N",
-              "SETTLEMENT_NET_AMOUNT" => "00000000001311E",
-              "SERVICE_FEE_RATE" => "000285",
-              "SETTLEMENT_GROSS_AMOUNT" => "00000000001350{",
-              "ROC_CALCULATED_COUNT" => "0000A",
-              "TERMINAL_ID" => "          ",
-              "SETTLEMENT_TAX_AMOUNT" => "00000000000000{",
-              "SETTLEMENT_TAX_RATE" => "0000000",
-              "SUBMISSION_CURRENCY_CODE" => "GBP",
-              "SUBMISSION_NUMBER" => "000000000000000",
-              "SUBMISSION_SE_BRANCH_NUMBER" => "          ",
-              "SUBMISSION_METHOD_CODE" => "E ",
-              "EXCHANGE_RATE" => "00000000010000{"
-            }
-          ],
-          "RECORD_OF_CHARGE" => [
-            {
-              "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
-              "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
-              "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
-              "CHARGE_AMOUNT" => "0000001350{",
-              "CHARGE_DATE" => "20140717",
-              "ROC_REFERENCE_NUMBER" => "               ",
-              "3-DIGIT_CHARGE_AUTHORISATION_CODE" => "128",
-              "CARD_MEMBER_ACCOUNT_NUMBER" => "377064XXXXX5847",
-              "AIRLINE_TICKET_NUMBER" => "              ",
-              "6-DIGIT_CHARGE_AUTHORISATION_CODE" => "123456"
+              "SUBMISSION_SE_ACCOUNT_NUMBER" => "0000000000",
+              "SETTLEMENT_AMOUNT" => "00000000002535I",
+              "SE_BANK_SORT_CODE" => "222333         ",
+              "SE_BANK_ACCOUNT_NUMBER" => "01231000            ",
+              "SETTLEMENT_GROSS_AMOUNT" => "00000000002610D",
+              "TAX_AMOUNT" => "00000000000000{",
+              "TAX_RATE" => "0000000",
+              "SERVICE_FEE_AMOUNT" => "00000000000074N",
+              "SERVICE_FEE_RATE" => "0000000",
+              "SETTLEMENT_ADJUSTMENT_AMOUNT" => "00000000000000{",
+              "PAY_PLAN_SHORT_NAME" => "CUT DAILY PAY 4 BANK DAYS     ",
+              "PAYEE_NAME" => "ACME1 PAYMENTS LIMITED                ",
+              "SETTLEMENT_ACCOUNT_NAME" => "PRIMARY             ",
+              "SETTLEMENT_CURRENCY_CODE" => "GBP",
+              "PREVIOUS_DEBIT_BALANCE" => "00000000000000{",
+              :children => {
+                "SUMMARY_OF_CHARGE" => [
+                  {
+                    "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+                    "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+                    "SETTLEMENT_DATE" => "20140724",
+                    "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+                    "SOC_DATE" => "20140718",
+                    "SUBMISSION_CALCULATED_GROSS_AMOUNT" => "00000000001350{",
+                    "SUBMISSION_DECLARED_GROSS_AMOUNT" => "00000000001350{",
+                    "DISCOUNT_AMOUNT" => "00000000000038N",
+                    "SETTLEMENT_NET_AMOUNT" => "00000000001311E",
+                    "SERVICE_FEE_RATE" => "000285",
+                    "SETTLEMENT_GROSS_AMOUNT" => "00000000001350{",
+                    "ROC_CALCULATED_COUNT" => "0000A",
+                    "TERMINAL_ID" => "          ",
+                    "SETTLEMENT_TAX_AMOUNT" => "00000000000000{",
+                    "SETTLEMENT_TAX_RATE" => "0000000",
+                    "SUBMISSION_CURRENCY_CODE" => "GBP",
+                    "SUBMISSION_NUMBER" => "000000000000000",
+                    "SUBMISSION_SE_BRANCH_NUMBER" => "          ",
+                    "SUBMISSION_METHOD_CODE" => "E ",
+                    "EXCHANGE_RATE" => "00000000010000{",
+                    :children => {
+                      "RECORD_OF_CHARGE" => [
+                        {
+                          "SETTLEMENT_SE_ACCOUNT_NUMBER" => "1234567891",
+                          "SETTLEMENT_ACCOUNT_NAME_CODE" => "002",
+                          "SUBMISSION_SE_ACCOUNT_NUMBER" => "1234567891",
+                          "CHARGE_AMOUNT" => "0000001350{",
+                          "CHARGE_DATE" => "20140717",
+                          "ROC_REFERENCE_NUMBER" => "1311123     ",
+                          "ROC_REFERENCE_NUMBER_CPC" => "               ",
+                          "3-DIGIT_CHARGE_AUTHORISATION_CODE" => "128",
+                          "CARD_MEMBER_ACCOUNT_NUMBER" => "377064XXXXX5847",
+                          "AIRLINE_TICKET_NUMBER" => "              ",
+                          "6-DIGIT_CHARGE_AUTHORISATION_CODE" => "123456"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
             }
           ]
         }

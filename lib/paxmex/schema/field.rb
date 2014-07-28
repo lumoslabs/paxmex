@@ -16,13 +16,14 @@ class Paxmex::Schema::Field
     time_pattern = /^time\((.+)\)$/
 
     case type
+    when 'string' then raw_value.rstrip
     when 'julian' then parse_julian_date(raw_value)
     when 'date' then Date.strptime(raw_value, '%m%d%Y')
     when 'numeric' then raw_value.strip.to_i
     when 'decimal' then parse_decimal(raw_value)
     when date_pattern then Date.strptime(raw_value, date_pattern.match(type).captures.first)
     when time_pattern then Time.strptime(raw_value, time_pattern.match(type).captures.first)
-    else raw_value.rstrip
+    else fail "Could not parse field type #{type}. Supported types: string, julian, date, numeric, decimal, date(format), time(format)"
     end
   end
 
