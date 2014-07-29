@@ -8,7 +8,7 @@ HEADER_RECORD:
       TYPE: time(%Y%m%d%H%M)
     - NAME: HEADER_ID
       RANGE: [18, 23]
-      TYPE: numeric
+      TYPE: string
     - NAME: HEADER_NAME
       RANGE: [24, 43]
       TYPE: string
@@ -242,12 +242,9 @@ TRAILER_RECORD:
     - NAME: TRAILER_RECORD_TYPE
       RANGE: [0, 5]
       TYPE: string
-    - NAME: TRAILER_DATE
-      RANGE: [6, 13]
-      TYPE: date(%Y%m%d)
     - NAME: TRAILER_TIME
-      RANGE: [14, 17]
-      TYPE: string
+      RANGE: [6, 17]
+      TYPE: time(%Y%m%d%H%M)
     - NAME: TRAILER_ID
       RANGE: [18, 23]
       TYPE: string
