@@ -212,8 +212,7 @@ describe Paxmex::Parser do
       parser_epa.parse.should == {
         "TRAILER_RECORD" => {
           "TRAILER_RECORD_TYPE" => "DFTLR",
-          "TRAILER_DATE" => Date.new(2014, 7, 22),
-          "TRAILER_TIME" => "0536",
+          "TRAILER_TIME" => Time.new(2014, 7, 22, 5, 36),
           "TRAILER_ID" => "PANEUR",
           "TRAILER_NAME" => "PAN-EUROPE EPA FILE",
           "TRAILER_RECIPIENT_KEY" => "9443010723",
@@ -222,7 +221,7 @@ describe Paxmex::Parser do
         "HEADER_RECORD" => {
           "HEADER_RECORD_TYPE" => "DFHDR",
           "HEADER_TIME" => Time.new(2014, 7, 22, 5, 36),
-          "HEADER_ID" => 0,
+          "HEADER_ID" => "PANEUR",
           "HEADER_NAME" => "PAN-EUROPE EPA FILE"
         },
         "PAYMENT_SUMMARY" => [
@@ -454,8 +453,7 @@ describe Paxmex::Parser do
         parser_epa.parse(raw_values: true).should == {
           "TRAILER_RECORD" => {
             "TRAILER_RECORD_TYPE" => "DFTLR ",
-            "TRAILER_DATE" => "20140722",
-            "TRAILER_TIME" => "0536",
+            "TRAILER_TIME" => "201407220536",
             "TRAILER_ID" => "PANEUR",
             "TRAILER_NAME" => "PAN-EUROPE EPA FILE ",
             "TRAILER_RECIPIENT_KEY" => "9443010723                              ",
