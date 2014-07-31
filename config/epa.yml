@@ -1,0 +1,260 @@
+HEADER_RECORD:
+  FIELDS:
+    - NAME: HEADER_RECORD_TYPE
+      RANGE: [0, 5]
+      TYPE: string
+    - NAME: HEADER_TIME
+      RANGE: [6, 17]
+      TYPE: time(%Y%m%d%H%M)
+    - NAME: HEADER_ID
+      RANGE: [18, 23]
+      TYPE: string
+    - NAME: HEADER_NAME
+      RANGE: [24, 43]
+      TYPE: string
+DETAIL_RECORD:
+  ABSTRACT: true
+  RECURRING: true
+  TYPE_FIELD: [32, 34]
+  TYPE_MAPPING:
+    '100': PAYMENT_SUMMARY
+    '210': SUMMARY_OF_CHARGE
+    '260': RECORD_OF_CHARGE
+    '230': ADJUSTMENT_RECORD
+  TYPES:
+    PAYMENT_SUMMARY:
+      RECURRING: true
+      FIELDS:
+        - NAME: SETTLEMENT_SE_ACCOUNT_NUMBER
+          RANGE: [0, 9]
+          TYPE: string
+        - NAME: SETTLEMENT_ACCOUNT_NAME_CODE
+          RANGE: [10, 12]
+          TYPE: string
+        - NAME: SETTLEMENT_DATE
+          RANGE: [13, 20]
+          TYPE: date(%Y%m%d)
+        - NAME: SUBMISSION_SE_ACCOUNT_NUMBER
+          RANGE: [22, 31]
+          TYPE: string
+        - NAME: SETTLEMENT_AMOUNT
+          RANGE: [40, 54]
+          TYPE: decimal
+        - NAME: SE_BANK_SORT_CODE
+          RANGE: [55, 69]
+          TYPE: string
+        - NAME: SE_BANK_ACCOUNT_NUMBER
+          RANGE: [70, 89]
+          TYPE: string
+        - NAME: SETTLEMENT_GROSS_AMOUNT
+          RANGE: [90, 104]
+          TYPE: decimal
+        - NAME: TAX_AMOUNT
+          RANGE: [105, 119]
+          TYPE: decimal
+        - NAME: TAX_RATE
+          RANGE: [120, 126]
+          TYPE: decimal
+        - NAME: SERVICE_FEE_AMOUNT
+          RANGE: [127, 141]
+          TYPE: decimal
+        - NAME: SERVICE_FEE_RATE
+          RANGE: [157, 163]
+          TYPE: decimal
+        - NAME: SETTLEMENT_ADJUSTMENT_AMOUNT
+          RANGE: [219, 233]
+          TYPE: decimal
+        - NAME: PAY_PLAN_SHORT_NAME
+          RANGE: [234, 263]
+          TYPE: string
+        - NAME: PAYEE_NAME
+          RANGE: [264, 301]
+          TYPE: string
+        - NAME: SETTLEMENT_ACCOUNT_NAME
+          RANGE: [302, 321]
+          TYPE: string
+        - NAME: SETTLEMENT_CURRENCY_CODE
+          RANGE: [322, 324]
+          TYPE: string
+        - NAME: PREVIOUS_DEBIT_BALANCE
+          RANGE: [325, 339]
+          TYPE: decimal
+    SUMMARY_OF_CHARGE:
+      RECURRING: true
+      PARENT: PAYMENT_SUMMARY
+      FIELDS:
+        - NAME: SETTLEMENT_SE_ACCOUNT_NUMBER
+          RANGE: [0, 9]
+          TYPE: string
+        - NAME: SETTLEMENT_ACCOUNT_NAME_CODE
+          RANGE: [10, 12]
+          TYPE: string
+        - NAME: SETTLEMENT_DATE
+          RANGE: [13, 20]
+          TYPE: date(%Y%m%d)
+        - NAME: SUBMISSION_SE_ACCOUNT_NUMBER
+          RANGE: [22, 31]
+          TYPE: string
+        - NAME: SOC_DATE
+          RANGE: [40, 47]
+          TYPE: date(%Y%m%d)
+        - NAME: SUBMISSION_CALCULATED_GROSS_AMOUNT
+          RANGE: [48, 62]
+          TYPE: decimal
+        - NAME: SUBMISSION_DECLARED_GROSS_AMOUNT
+          RANGE: [63, 77]
+          TYPE: decimal
+        - NAME: DISCOUNT_AMOUNT
+          RANGE: [78, 92]
+          TYPE: decimal
+        - NAME: SETTLEMENT_NET_AMOUNT
+          RANGE: [108, 122]
+          TYPE: decimal
+        - NAME: SERVICE_FEE_RATE
+          RANGE: [123, 128]
+          TYPE: decimal
+        - NAME: SETTLEMENT_GROSS_AMOUNT
+          RANGE: [170, 184]
+          TYPE: decimal
+        - NAME: ROC_CALCULATED_COUNT
+          RANGE: [185, 189]
+          TYPE: decimal
+        - NAME: TERMINAL_ID
+          RANGE: [205, 214]
+          TYPE: string
+        - NAME: SETTLEMENT_TAX_AMOUNT
+          RANGE: [215, 229]
+          TYPE: decimal
+        - NAME: SETTLEMENT_TAX_RATE
+          RANGE: [230, 236]
+          TYPE: decimal
+        - NAME: SUBMISSION_CURRENCY_CODE
+          RANGE: [237, 239]
+          TYPE: string
+        - NAME: SUBMISSION_NUMBER
+          RANGE: [240, 254]
+          TYPE: numeric
+        - NAME: SUBMISSION_SE_BRANCH_NUMBER
+          RANGE: [255, 264]
+          TYPE: string
+        - NAME: SUBMISSION_METHOD_CODE
+          RANGE: [265, 266]
+          TYPE: string
+        - NAME: EXCHANGE_RATE
+          RANGE: [292, 306]
+          TYPE: decimal
+    RECORD_OF_CHARGE:
+      RECURRING: true
+      PARENT: SUMMARY_OF_CHARGE
+      FIELDS:
+        - NAME: SETTLEMENT_SE_ACCOUNT_NUMBER
+          RANGE: [0, 9]
+          TYPE: string
+        - NAME: SETTLEMENT_ACCOUNT_NAME_CODE
+          RANGE: [10, 12]
+          TYPE: string
+        - NAME: SUBMISSION_SE_ACCOUNT_NUMBER
+          RANGE: [22, 31]
+          TYPE: string
+        - NAME: CHARGE_AMOUNT
+          RANGE: [40, 50]
+          TYPE: decimal
+        - NAME: CHARGE_DATE
+          RANGE: [51, 58]
+          TYPE: date(%Y%m%d)
+        - NAME: ROC_REFERENCE_NUMBER
+          RANGE: [59, 70]
+          TYPE: string
+        - NAME: ROC_REFERENCE_NUMBER_CPC
+          RANGE: [71, 85]
+          TYPE: string
+        - NAME: 3-DIGIT_CHARGE_AUTHORISATION_CODE
+          RANGE: [86, 88]
+          TYPE: string
+        - NAME: CARD_MEMBER_ACCOUNT_NUMBER
+          RANGE: [89, 103]
+          TYPE: string
+        - NAME: AIRLINE_TICKET_NUMBER
+          RANGE: [104, 117]
+          TYPE: string
+        - NAME: 6-DIGIT_CHARGE_AUTHORISATION_CODE
+          RANGE: [118, 123]
+          TYPE: string
+    ADJUSTMENT_DETAIL_RECORD:
+      FIELDS:
+        - NAME: SETTLEMENT_SE_ACCOUNT_NUMBER
+          RANGE: [0, 9]
+          TYPE: string
+        - NAME: SETTLEMENT_ACCOUNT_NAME_CODE
+          RANGE: [10, 12]
+          TYPE: string
+        - NAME: SETTLEMENT_DATE
+          RANGE: [13, 20]
+          TYPE: date(%Y%m%d)
+        - NAME: SUBMISSION_SE_ACCOUNT_NUMBER
+          RANGE: [22, 31]
+          TYPE: decimal
+        - NAME: SUPPORTING_REFERENCE_NUMBER
+          RANGE: [40, 50]
+          TYPE: string
+        - NAME: SETTLEMENT_GROSS_AMOUNT
+          RANGE: [51, 65]
+          TYPE: decimal
+        - NAME: SETTLEMENT_DISCOUNT_AMOUNT
+          RANGE: [66, 80]
+          TYPE: decimal
+        - NAME: SETTLEMENT_NET_AMOUNT
+          RANGE: [96, 110]
+          TYPE: decimal
+        - NAME: SERVICE_FEE_RATE
+          RANGE: [111, 117]
+          TYPE: decimal
+        - NAME: SETTLEMENT_TAX_AMOUNT
+          RANGE: [153, 167]
+          TYPE: decimal
+        - NAME: SETTLEMENT_TAX_RATE
+          RANGE: [168, 174]
+          TYPE: decimal
+        - NAME: CARDMEMBER_ACCOUNT_NUMBER
+          RANGE: [190, 204]
+          TYPE: decimal
+        - NAME: ADJUSTMENT_RECORD_CODE
+          RANGE: [205, 214]
+          TYPE: string
+        - NAME: ADJUSTMENT_MESSAGE_DESCRIPTION
+          RANGE: [215, 278]
+          TYPE: string
+        - NAME: SUBMISSION_SE_BRANCH_NUMBER
+          RANGE: [282, 291]
+          TYPE: string
+        - NAME: SUBMISSION_GROSS_AMOUNT
+          RANGE: [292, 306]
+          TYPE: decimal
+        - NAME: SUBMISSION_CURRENCY_CODE
+          RANGE: [307, 309]
+          TYPE: string
+        - NAME: ADJUSTMENT_MESSAGE_REFERENCE
+          RANGE: [310, 324]
+          TYPE: string
+TRAILER_RECORD:
+  TRAILER: true
+  FIELDS:
+    - NAME: TRAILER_RECORD_TYPE
+      RANGE: [0, 5]
+      TYPE: string
+    - NAME: TRAILER_TIME
+      RANGE: [6, 17]
+      TYPE: time(%Y%m%d%H%M)
+    - NAME: TRAILER_ID
+      RANGE: [18, 23]
+      TYPE: string
+    - NAME: TRAILER_NAME
+      RANGE: [24, 43]
+      TYPE: string
+    - NAME: TRAILER_RECIPIENT_KEY
+      RANGE: [44, 83]
+      TYPE: string
+    - NAME: TRAILER_RECORD_COUNT
+      RANGE: [84, 90]
+      TYPE: numeric
+
