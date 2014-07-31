@@ -44,7 +44,6 @@ class Paxmex::Parser
 
   private
 
-
   def parse_section(section, content, opts = {})
     result = {}
     abstract_section = section if section.abstract?

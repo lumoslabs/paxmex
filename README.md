@@ -76,7 +76,6 @@ The last method (parse_epa) returns nearly the same, but it contains nested reco
               ...
 ```
 
-
 Values are parsed from their representation into a corresponding native Ruby type:
 
 * Alphanumeric values become strings (with whitespace stripped)
@@ -94,7 +93,6 @@ Paxmex.parse_epraw(path_to_file, raw_values: true)
 Paxmex.parse_epa(path_to_file, raw_values: true)
 ```
 
-
 ## User-defined schema
 
 If you need to parse a different format (i.e. not EPRAW, EPTRN or EPA), write your own schema definition and use it like this:
@@ -102,7 +100,6 @@ If you need to parse a different format (i.e. not EPRAW, EPTRN or EPA), write yo
 parser = Parser.new(path_to_raw_file, path_to_schema_file)
 result = parser.parse
 ```
-
 
 ## Example
 

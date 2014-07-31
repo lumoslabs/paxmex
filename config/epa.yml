@@ -257,4 +257,3 @@ TRAILER_RECORD:
     - NAME: TRAILER_RECORD_COUNT
       RANGE: [84, 90]
       TYPE: numeric
-

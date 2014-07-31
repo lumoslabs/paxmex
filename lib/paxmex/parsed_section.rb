@@ -22,5 +22,4 @@ class Paxmex::ParsedSection < Hash
     self[:children][key] ||= []
     self[:children][key] << child
   end
-
 end

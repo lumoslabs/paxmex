@@ -43,5 +43,4 @@ class Paxmex::Schema
     fail 'Recursive parent definition' if @parents.include?(section.key)
     @parents << parent
   end
-
 end

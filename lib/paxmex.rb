@@ -8,5 +8,4 @@ module Paxmex
       super
     end
   end
-
 end
