@@ -20,7 +20,7 @@ DETAIL_RECORD:
     '100': PAYMENT_SUMMARY
     '210': SUMMARY_OF_CHARGE
     '260': RECORD_OF_CHARGE
-    '230': ADJUSTMENT_RECORD
+    '230': ADJUSTMENT_DETAIL_RECORD
   TYPES:
     PAYMENT_SUMMARY:
       RECURRING: true
@@ -217,7 +217,7 @@ DETAIL_RECORD:
           TYPE: decimal
         - NAME: CARDMEMBER_ACCOUNT_NUMBER
           RANGE: [190, 204]
-          TYPE: decimal
+          TYPE: string
         - NAME: ADJUSTMENT_RECORD_CODE
           RANGE: [205, 214]
           TYPE: string
