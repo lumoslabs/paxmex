@@ -1,5 +1,4 @@
 require 'paxmex/parser'
-require 'pry-nav'
 describe Paxmex::Parser do
   let(:eptrn_file) { File.join(File.dirname(__FILE__), 'support/dummy_eptrn_raw') }
   let(:schema_key_eptrn) { 'eptrn' }

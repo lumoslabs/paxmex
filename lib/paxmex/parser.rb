@@ -50,7 +50,6 @@ class Paxmex::Parser
 
     content.each do |section_content|
       if abstract_section
-        binding.pry
         start, final = abstract_section.type_field
         section_type = section_content[start..final]
         section = abstract_section.section_for_type(section_type)
