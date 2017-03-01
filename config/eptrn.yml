@@ -308,7 +308,7 @@ DETAIL_RECORD:
           RANGE: [52, 60]
           TYPE: decimal
         - NAME: ASSET_BILLING_DESCRIPTION
-          RANGE: [61, 126]
+          RANGE: [61, 125]
         - NAME: TAKE_ONE_COMMISSION_AMOUNT
           RANGE: [126, 134]
           TYPE: decimal
