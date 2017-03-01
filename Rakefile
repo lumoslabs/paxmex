@@ -1,4 +1,5 @@
-#!/usr/bin/env rake
+#! /usr/bin/env rake
+
 begin
   require 'bundler/setup'
 rescue LoadError
@@ -6,7 +7,9 @@ rescue LoadError
 end
 
 require 'rspec/core/rake_task'
+require 'rubygems/package_task'
 
+Bundler::GemHelper.install_tasks
 RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
