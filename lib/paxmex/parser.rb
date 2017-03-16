@@ -3,7 +3,7 @@ require 'paxmex/schema'
 require 'paxmex/parsed_section'
 
 class Paxmex::Parser
-  SCHEMATA = %w(epraw eptrn epa).reduce({}) do |h, fn|
+  SCHEMATA = %w(epraw eptrn epa cbnot).reduce({}) do |h, fn|
     file = File.expand_path("../../config/#{fn}.yml", File.dirname(__FILE__))
     h.merge(fn => Paxmex::Schema.new(YAML.load(File.open(file))))
   end
@@ -36,7 +36,8 @@ class Paxmex::Parser
     trailer_content = [content.slice!(-1)]
     @parsed = parse_section(trailer_section, trailer_content, raw: opts[:raw_values])
 
-    schema.sections.reject(&:trailer?).each.with_object(@parsed) do |s, o|
+    schema.sections.reject(&:trailer?).each_with_object(@parsed) do |s, o|
+      break o if content.size == 0
       section_content = s.recurring? ? content : [content.slice!(0)]
       o.update(parse_section(s, section_content, raw: opts[:raw_values]))
     end
