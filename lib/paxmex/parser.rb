@@ -36,10 +36,10 @@ class Paxmex::Parser
     trailer_content = [content.slice!(-1)]
     @parsed = parse_section(trailer_section, trailer_content, raw: opts[:raw_values])
 
-    schema.sections.reject(&:trailer?).each_with_object(@parsed) do |s, o|
-      break o if content.size == 0
-      section_content = s.recurring? ? content : [content.slice!(0)]
-      o.update(parse_section(s, section_content, raw: opts[:raw_values]))
+    schema.sections.reject(&:trailer?).each_with_object(@parsed) do |section, parsed|
+      break parsed if content.size == 0
+      section_content = section.recurring? ? content : [content.slice!(0)]
+      parsed.update(parse_section(section, section_content, raw: opts[:raw_values]))
     end
   end
 
