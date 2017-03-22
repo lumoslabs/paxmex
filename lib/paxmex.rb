@@ -1,11 +1,27 @@
-module Paxmex
-  require 'paxmex/parser'
+require 'paxmex/parser'
 
-  def self.method_missing(method_sym, *arguments, &block)
-    if method_sym.to_s =~ /^parse_(.*)$/
-      Parser.new(arguments.shift, $1).parse(*arguments)
-    else
-      super
+module Paxmex
+  class << self
+    def parse_cbnot(*args)
+      parse('cbnot', *args)
+    end
+
+    def parse_epa(*args)
+      parse('epa', *args)
+    end
+
+    def parse_epraw(*args)
+      parse('epraw', *args)
+    end
+
+    def parse_eptrn(*args)
+      parse('eptrn', *args)
+    end
+
+    private
+
+    def parse(schema, *args)
+      Parser.new(args.shift, schema).parse(*args)
     end
   end
 end
