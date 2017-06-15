@@ -12,14 +12,23 @@ This gem parses your Amex data files into human readable data.
 % gem install paxmex
 ```
 
-## Available Methods
+## Available Formats
 
-* parse_eptrn(file_path)
-* parse_epraw(file_path)
-* parse_cbnot(file_path)
-* parse_epa(file_path)
+* eptrn
+* epraw
+* cbnot
+* epa
 
-The first three methods return a readable hash in the following format:
+## Usage
+
+Each report format has a corresponding method on the `Paxmex` module. Call `parse` or `load_file` on the return value to either parse data in memory or from a file:
+
+```ruby
+Paxmex.eptrn.parse("...")
+Paxmex.eptrn.load_file('/path/to/file.cbnot')
+```
+
+The first three report formats (i.e. eptrn, epraw, and cbnot) return a hash in the following format:
 
 ```ruby
 {
@@ -43,7 +52,7 @@ The first three methods return a readable hash in the following format:
 }
 ```
 
-The last method (parse_epa) returns nearly the same, but it contains nested records (according to the schema definition):
+The last format (epa) returns nearly the same thing, but contains nested records as indicated by the epa schema definition:
 
 ```ruby
 {
@@ -89,15 +98,16 @@ Values are parsed from their representation into a corresponding native Ruby typ
 If you'd like the raw values to be returned instead, you can set the ```raw_values``` option to true, e.g.:
 
 ```ruby
-Paxmex.parse_eptrn(path_to_file, raw_values: true)
-Paxmex.parse_epraw(path_to_file, raw_values: true)
-Paxmex.parse_cbnot(path_to_file, raw_values: true)
-Paxmex.parse_epa(path_to_file, raw_values: true)
+Paxmex.eptrn.parse(path_to_file, raw_values: true)
+Paxmex.epraw.parse(path_to_file, raw_values: true)
+Paxmex.cbnot.parse(path_to_file, raw_values: true)
+Paxmex.epa.parse(path_to_file, raw_values: true)
 ```
 
 ## User-defined schema
 
 If you need to parse a different format (i.e. not EPRAW, EPTRN, CBNOT, or EPA), write your own schema definition and use it like this:
+
 ```ruby
 parser = Parser.new(path_to_raw_file, path_to_schema_file)
 result = parser.parse
@@ -109,10 +119,10 @@ result = parser.parse
 require 'paxmex'
 
 # Use default schema definitions
-Paxmex.parse_eptrn('/path/to/amex/eptrn/raw/file')
-Paxmex.parse_epraw('/path/to/amex/epraw/raw/file')
-Paxmex.parse_cbnot('/path/to/amex/cbnot/raw/file')
-Paxmex.parse_epa('/path/to/amex/epa/raw/file')
+Paxmex.eptrn.parse('/path/to/amex/eptrn/raw/file')
+Paxmex.epraw.parse('/path/to/amex/epraw/raw/file')
+Paxmex.cbnot.parse('/path/to/amex/cbnot/raw/file')
+Paxmex.epa.parse('/path/to/amex/epa/raw/file')
 
 # Use your own schema definition
 parser = Parser.new('/path/to/raw/file', '/path/to/your/schema.yml')
@@ -120,6 +130,7 @@ result = parser.parse
 ```
 
 The raw input files for either methods are data report files provided by American Express. These files are in either EPRAW, EPTRN, CBNOT, or EPA format so use the relevant method to parse them. We have provided dummy EPRAW, EPTRN, CBNOT, and EPA files in `spec/support`. Output and key-value pairs vary depending on whether you choose to parse an EPTRN, EPRAW, CBNOT, or EPA file.
+
 If you need to parse a file in another format, you can write your own YAML schema for this purpose. We would be happy if you help us improving this project by sharing your schemas.
 
 ## Contributing
