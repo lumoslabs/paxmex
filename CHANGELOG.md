@@ -2,7 +2,6 @@
 * Allow loading content from a string as well as from a file.
 * Introduce new public interface for parsing and loading, eg. Paxmex.epraw.parse(...).
 * Upgrade to rspec 3.0.
-* Drop support for ruby < 2.2.
 
 # 1.2.1
 * General cleanup
