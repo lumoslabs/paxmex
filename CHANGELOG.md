@@ -1,3 +1,6 @@
+# 2.0.0
+*
+
 # 1.2.1
 * General cleanup
 * Fixed issue with numeric fields containing float values.

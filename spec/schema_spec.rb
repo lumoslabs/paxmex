@@ -1,4 +1,4 @@
-require 'paxmex/schema/section'
+require 'spec_helper'
 require 'yaml'
 
 describe Paxmex::Schema do
@@ -8,11 +8,11 @@ describe Paxmex::Schema do
 
   describe '#parent_section?' do
     it 'is true if at least other record defines it as a parent' do
-      schema.parent_section?('SUMMARY_OF_CHARGE').should be true
+      expect(schema.parent_section?('SUMMARY_OF_CHARGE')).to be true
     end
 
     it 'is false if no other records define it as a parent' do
-      schema.parent_section?('RECORD_CHARGE').should be false
+      expect(schema.parent_section?('RECORD_CHARGE')).to be false
     end
   end
 

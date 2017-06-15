@@ -10,8 +10,8 @@ class Paxmex::Parser
 
   attr_reader :schema, :path
 
-  def initialize(path, schema)
-    @path = path
+  def initialize(data, schema)
+    @data = data.chomp
     @parent_chain = []
 
     if File.file?(schema)
@@ -22,13 +22,13 @@ class Paxmex::Parser
   end
 
   def raw
-    @raw ||= File.read(@path).chomp
+    @data
   end
 
   def parse(opts = {})
     return @parsed if @parsed
 
-    content = raw.split("\n")
+    content = @data.split("\n")
 
     # Parse the trailing section first so that we don't need
     # to consider it when parsing recurring sections
