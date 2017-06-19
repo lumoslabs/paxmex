@@ -1,4 +1,4 @@
-require 'paxmex/schema/section'
+require 'spec_helper'
 
 describe Paxmex::Schema::Section do
   let(:key_child) { 'EXAMPLE_CHILD' }
@@ -11,11 +11,11 @@ describe Paxmex::Schema::Section do
 
   describe '#child?' do
     it 'is true for a record with a parent' do
-      child_section.child?.should be true
+      expect(child_section.child?).to be true
     end
 
     it 'is false for a record without a parent' do
-      parent_section.child?.should be false
+      expect(parent_section.child?).to be false
     end
   end
 

@@ -1,27 +1,37 @@
 require 'paxmex/parser'
 
 module Paxmex
+  class SchemaProxy
+    attr_reader :schema_name
+
+    def initialize(schema_name)
+      @schema_name = schema_name
+    end
+
+    def parse(data, opts = {})
+      Parser.new(data, schema_name).parse(opts)
+    end
+
+    def load_file(file, opts = {})
+      parse(File.read(file), opts)
+    end
+  end
+
   class << self
-    def parse_cbnot(*args)
-      parse('cbnot', *args)
+    def cbnot
+      @cbnot ||= SchemaProxy.new('cbnot')
     end
 
-    def parse_epa(*args)
-      parse('epa', *args)
+    def epa
+      @epa ||= SchemaProxy.new('epa')
     end
 
-    def parse_epraw(*args)
-      parse('epraw', *args)
+    def epraw
+      @epraw ||= SchemaProxy.new('epraw')
     end
 
-    def parse_eptrn(*args)
-      parse('eptrn', *args)
-    end
-
-    private
-
-    def parse(schema, *args)
-      Parser.new(args.shift, schema).parse(*args)
+    def eptrn
+      @eptrn ||= SchemaProxy.new('eptrn')
     end
   end
 end

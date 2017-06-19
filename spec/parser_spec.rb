@@ -3,62 +3,62 @@ require 'spec_helper'
 describe Paxmex::Parser do
   let(:eptrn_file) { File.join(File.dirname(__FILE__), 'support/dummy_eptrn_raw') }
   let(:schema_key_eptrn) { 'eptrn' }
-  let(:parser_eptrn) { Paxmex::Parser.new(eptrn_file, schema_key_eptrn) }
+  let(:parser_eptrn) { Paxmex::Parser.new(File.read(eptrn_file), schema_key_eptrn) }
 
   let(:epraw_file) { File.join(File.dirname(__FILE__), 'support/dummy_epraw_raw') }
   let(:schema_key_epraw) { 'epraw' }
-  let(:parser_epraw) { Paxmex::Parser.new(epraw_file, schema_key_epraw) }
+  let(:parser_epraw) { Paxmex::Parser.new(File.read(epraw_file), schema_key_epraw) }
 
   let(:epa_file) { File.join(File.dirname(__FILE__), 'support/dummy_epa_raw') }
   let(:schema_key_epa) { 'epa' }
   let(:schema_file_epa) { File.expand_path('../config/epa.yml', File.dirname(__FILE__)) }
-  let(:parser_epa) { Paxmex::Parser.new(epa_file, schema_key_epa) }
+  let(:parser_epa) { Paxmex::Parser.new(File.read(epa_file), schema_key_epa) }
 
   let(:cbnot_file) { File.join(File.dirname(__FILE__), 'support/dummy_cbnot_raw') }
   let(:schema_key_cbnot) { 'cbnot' }
   let(:schema_file_cbnot) { File.expand_path('../config/cbnot.yml', File.dirname(__FILE__)) }
-  let(:parser_cbnot) { Paxmex::Parser.new(cbnot_file, schema_key_cbnot) }
+  let(:parser_cbnot) { Paxmex::Parser.new(File.read(cbnot_file), schema_key_cbnot) }
 
   describe '.new' do
     it 'accepts a schema name as well as a schema file' do
       schema_1 = Paxmex::Parser.new(eptrn_file, schema_key_epa).schema
       schema_2 = Paxmex::Parser.new(eptrn_file, schema_file_epa).schema
 
-      schema_1.to_h.should == schema_2.to_h
+      expect(schema_1.to_h).to eq(schema_2.to_h)
     end
   end
 
   describe '#raw' do
     it 'returns the raw text for the eptrn file' do
-      parser_eptrn.raw.should == File.read(eptrn_file).chomp
+      expect(parser_eptrn.raw).to eq(File.read(eptrn_file).chomp)
     end
 
     it 'returns the raw text for the epraw file' do
-      parser_epraw.raw.should == File.read(epraw_file).chomp
+      expect(parser_epraw.raw).to eq(File.read(epraw_file).chomp)
     end
 
     it 'returns the raw text for the epa file' do
-      parser_epa.raw.should == File.read(epa_file).chomp
+      expect(parser_epa.raw).to eq(File.read(epa_file).chomp)
     end
   end
 
   describe '#schema' do
     it 'returns a schema object for the eptrn file' do
-      parser_eptrn.schema.should be_instance_of(Paxmex::Schema)
+      expect(parser_eptrn.schema).to be_instance_of(Paxmex::Schema)
     end
 
     it 'returns a schema object for the epraw file' do
-      parser_epraw.schema.should be_instance_of(Paxmex::Schema)
+      expect(parser_epraw.schema).to be_instance_of(Paxmex::Schema)
     end
 
     it 'returns a schema object for the epa file' do
-      parser_epa.schema.should be_instance_of(Paxmex::Schema)
+      expect(parser_epa.schema).to be_instance_of(Paxmex::Schema)
     end
   end
 
   describe '#parse' do
     it 'returns a hash with parsed values for the eptrn file' do
-      parser_eptrn.parse.should == {
+      expect(parser_eptrn.parse).to eq({
         "DATA_FILE_TRAILER_RECORD" => {
           "DF_TRL_RECORD_TYPE" => "DFTRL",
           "DF_TRL_DATE" => Date.parse('2013-03-08'),
@@ -145,11 +145,11 @@ describe Paxmex::Parser do
             "NON_SWIPED_INDICATOR" => ""
           }
         ]
-      }
+      })
     end
 
     it 'returns a hash with parsed values for the epraw file' do
-      parser_epraw.parse.should == {
+      expect(parser_epraw.parse).to eq({
         "DATA_FILE_TRAILER_RECORD" => {
           "DF_TRL_RECORD_TYPE" => "DFTRL",
           "DF_TRL_DATE" => Date.parse('2013-03-08'),
@@ -210,11 +210,11 @@ describe Paxmex::Parser do
             "CPC_INDICATOR" => ""
           }
         ]
-      }
+      })
     end
 
     it 'returns a hash with parsed values for the epa file' do
-      parser_epa.parse.should == {
+      expect(parser_epa.parse).to eq({
         "TRAILER_RECORD" => {
           "TRAILER_RECORD_TYPE" => "DFTLR",
           "TRAILER_TIME" => Time.new(2014, 7, 22, 5, 36),
@@ -294,11 +294,11 @@ describe Paxmex::Parser do
             }
           }
         ]
-      }
+      })
     end
 
     it 'returns a hash with parsed values for the cbnot file' do
-      parser_cbnot.parse.should == {
+      expect(parser_cbnot.parse).to eq({
         "DATA_FILE_TRAILER_RECORD" => {
           "REC_TYPE" => "T",
           "AMEX_APPL_AREA" => "010120170316      0000000000000007000000007",
@@ -434,12 +434,12 @@ describe Paxmex::Parser do
           "CCYYDDD" => Date.new(2017, 3, 16),
           "0HHMMSS" => 231306
         }
-      }
+      })
     end
 
     context 'with raw set to true' do
       it 'returns a hash with raw values for the eptrn file' do
-        parser_eptrn.parse(raw_values: true).should == {
+        expect(parser_eptrn.parse(raw_values: true)).to eq({
           "DATA_FILE_TRAILER_RECORD" => {
             "DF_TRL_RECORD_TYPE" => "DFTRL",
             "DF_TRL_DATE" => "03082013",
@@ -526,11 +526,11 @@ describe Paxmex::Parser do
               "NON_SWIPED_INDICATOR" => " "
             }
           ]
-        }
+        })
       end
 
       it 'returns a hash with raw values for the epraw file' do
-        parser_epraw.parse(raw_values: true).should == {
+        expect(parser_epraw.parse(raw_values: true)).to eq({
           "DATA_FILE_TRAILER_RECORD" => {
             "DF_TRL_RECORD_TYPE" => "DFTRL",
             "DF_TRL_DATE" => "03082013",
@@ -591,11 +591,11 @@ describe Paxmex::Parser do
               "CPC_INDICATOR" => " "
             }
           ]
-        }
+        })
       end
 
       it 'returns a hash with raw values for the cbnot file' do
-        parser_cbnot.parse(raw_values: true).should == {
+        expect(parser_cbnot.parse(raw_values: true)).to eq({
           "DATA_FILE_HEADER_RECORD" => {
             "REC_TYPE" => "H",
             "AMEX_APPL_AREA" => "010120170316      00                                                                                ",
@@ -730,11 +730,11 @@ describe Paxmex::Parser do
             "0HHMMSS" => "0231306",
             "STARS_FILESEQ_NB" => "001"
           },
-        }
+        })
       end
 
       it 'returns a hash with raw values for the epa file' do
-        parser_epa.parse(raw_values: true).should == {
+        expect(parser_epa.parse(raw_values: true)).to eq({
           "TRAILER_RECORD" => {
             "TRAILER_RECORD_TYPE" => "DFTLR ",
             "TRAILER_TIME" => "201407220536",
@@ -814,7 +814,7 @@ describe Paxmex::Parser do
               }
             }
           ]
-        }
+        })
       end
     end
   end

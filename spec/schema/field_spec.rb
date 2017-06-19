@@ -1,4 +1,4 @@
-require 'paxmex/schema/field'
+require 'spec_helper'
 
 describe Paxmex::Schema::Field do
   describe '#parse' do
